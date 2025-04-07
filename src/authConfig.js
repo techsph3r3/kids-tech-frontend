@@ -1,3 +1,7 @@
+console.log("🟢 CLIENT_ID:", import.meta.env.VITE_CLIENT_ID);
+console.log("🟢 TENANT_ID:", import.meta.env.VITE_TENANT_ID);
+console.log("🟢 REDIRECT_URI:", import.meta.env.VITE_REDIRECT_URI);
+
 export const msalConfig = {
   auth: {
     clientId: import.meta.env.VITE_CLIENT_ID,
