@@ -3,11 +3,10 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  root: '.', // Optional, makes sure Vite starts at project root
+  root: '.',           // ensure root is correct
   build: {
-    outDir: 'dist',
-    rollupOptions: {
-      input: 'public/index.html'
-    }
-  }
-})
+    outDir: 'dist',    // where to output the final build
+    emptyOutDir: true, // clean before build
+  },
+  publicDir: 'public', // explicitly use the public folder
+});
