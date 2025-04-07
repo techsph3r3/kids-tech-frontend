@@ -5,6 +5,8 @@ import { PublicClientApplication } from '@azure/msal-browser';
 import { MsalProvider } from '@azure/msal-react';
 import { msalConfig } from './authConfig';
 
+console.log("🟢 main.jsx is executing...");
+
 const msalInstance = new PublicClientApplication(msalConfig);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
