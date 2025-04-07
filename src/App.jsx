@@ -3,6 +3,7 @@ import { useMsal } from '@azure/msal-react';
 import { loginRequest } from './authConfig';
 
 function App() {
+  console.log("✅ React App rendered");
   const { instance, accounts } = useMsal();
   const [pages, setPages] = useState([]);
 
