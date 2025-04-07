@@ -33,37 +33,46 @@ function App() {
       });
 
       const data = await res.json();
+      console.log("✅ Page data received:", data);
       setPages(data || []);
     } catch (err) {
-      console.error("Fetch error:", err);
+      console.error("❌ Fetch error:", err);
     }
   };
 
   useEffect(() => {
+    console.log("✅ App rendered. Accounts:", accounts);
     if (accounts.length > 0) {
       fetchNotebookPages();
     }
   }, [accounts]);
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
       {accounts.length > 0 ? (
         <>
           <h1>Welcome, {accounts[0].username}!</h1>
           <button onClick={handleLogout}>Log out</button>
-          <h2>OneNote Pages</h2>
-          <ul>
-            {pages.map((page) => (
-              <li key={page.id}>
-                <a href={page.url} target="_blank" rel="noopener noreferrer">
-                  {page.title || "Untitled Page"}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <h2>Your OneNote Pages:</h2>
+          {pages.length === 0 ? (
+            <p>No pages found.</p>
+          ) : (
+            <ul>
+              {pages.map((page) => (
+                <li key={page.id}>
+                  <a href={page.url} target="_blank" rel="noopener noreferrer">
+                    {page.title || "Untitled Page"}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </>
       ) : (
-        <button onClick={handleLogin}>Sign in with Microsoft</button>
+        <>
+          <p>Please sign in to access your OneNote pages.</p>
+          <button onClick={handleLogin}>Sign in with Microsoft</button>
+        </>
       )}
     </div>
   );
