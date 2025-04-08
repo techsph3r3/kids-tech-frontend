@@ -2,31 +2,14 @@ import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../lib/authConfig";
 
 const LoginButton = () => {
-  const { instance, accounts } = useMsal();
+  const { instance } = useMsal();
 
   const handleLogin = async () => {
     try {
-      const loginResp = await instance.loginPopup(loginRequest);
-
-      const tokenResp = await instance.acquireTokenSilent({
-        ...loginRequest,
-        account: loginResp.account,
-      });
-
-      const accessToken = tokenResp.accessToken;
-
-      const response = await fetch("https://kids-tech-backend.vercel.app/api/onenote", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      const data = await response.json();
-      console.log("Graph API Response:", data);
-      alert("Check console for OneNote data");
+      await instance.loginRedirect(loginRequest);
     } catch (err) {
-      console.error("Auth or fetch error:", err);
-      alert("Something went wrong (check console)");
+      console.error("Login failed:", err);
+      alert("Login error – check console");
     }
   };
 
@@ -34,3 +17,4 @@ const LoginButton = () => {
 };
 
 export default LoginButton;
+
