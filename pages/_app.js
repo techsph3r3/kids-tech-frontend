@@ -5,22 +5,16 @@ import { msalConfig } from "../lib/authConfig";
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
-// Optional: handle redirect to close the popup
-if (typeof window !== "undefined") {
-  msalInstance.addEventCallback((event) => {
-    if (event.eventType === EventType.LOGIN_SUCCESS && event.payload.account) {
-      msalInstance.setActiveAccount(event.payload.account);
-    }
-  });
-}
-
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      msalInstance
-        .handleRedirectPromise()
-        .catch((err) => console.error("MSAL redirect error:", err));
-    }
+    msalInstance
+      .handleRedirectPromise()
+      .then((response) => {
+        if (response?.account) {
+          msalInstance.setActiveAccount(response.account);
+        }
+      })
+      .catch((err) => console.error("Redirect error:", err));
   }, []);
 
   return (
@@ -31,3 +25,4 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
+
